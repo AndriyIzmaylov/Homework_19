@@ -1,5 +1,5 @@
 from selenium import webdriver
-from webdriver.chrome import ChromeDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 driver = webdriver.Chrome(ChromeDriverManager().install())
 new_user_name = "rando"
