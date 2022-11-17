@@ -22,8 +22,8 @@ def login_into_the_system(cred_file):
 
 
 
-def test_create():
-    login_into_the_system()
+def test_create(cred_file):
+    login_into_the_system(cred_file)
     pytest.driver.get("https://www.aqa.science/users")
     userName_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[1]/div/input')
     userEmail_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[2]/div/input')
