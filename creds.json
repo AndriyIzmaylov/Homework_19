@@ -4,5 +4,6 @@
   "updated_name" : "ololo",
   "admin_login": "admin",
   "admin_password": "admin123",
-  "endpoint": "https://www.aqa.science/api-auth/login/?next=/"
+  "endpoint": "https://www.aqa.science/api-auth/login/?next=/",
+
 }
