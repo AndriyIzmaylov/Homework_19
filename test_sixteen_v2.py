@@ -2,8 +2,6 @@ import pytest
 from selenium.webdriver.common.by import By
 
 def test_create(login_into_the_system, check_user_exist, cred_file):
-    pytest.driver.get("https://www.aqa.science/users")
-
     assert check_user_exist == "HTTP 201 Created"
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
