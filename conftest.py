@@ -17,8 +17,9 @@ def cred_file():
         admin_password = login_variables["admin_password"]
         return admin_name, admin_password
 
-@pytest.fixture(scope="class", autouse=True)
-def sesion_class():
+
+@pytest.fixture(scope="session", autouse=True)
+def session_class():
     # Open file with data
     with open(file_pass, "r") as f:
         login_variables = json.load(f)
