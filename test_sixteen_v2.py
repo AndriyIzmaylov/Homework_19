@@ -1,22 +1,16 @@
 import pytest
 from selenium.webdriver.common.by import By
 
-def test_create(login_into_the_system, check_user_exist, cred_file):
-    assert check_user_exist == "HTTP 201 Created"
+
+def test_create(login_into_the_system, check_create_user, cred_file):
+    assert check_create_user == "HTTP 201 Created"
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
     user_name_after_creating = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[14]').text
     assert user_name_after_creating == f'"{cred_file["new_user_name"]}"'
 
 
-def test_read(login_into_the_system, cred_file):
-    pytest.driver.get("https://www.aqa.science/users")
-    userName_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[1]/div/input')
-    userEmail_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[2]/div/input')
-    createUserButton = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[4]/button')
-    userName_field.send_keys(cred_file["new_user_name"])
-    userEmail_field.send_keys(cred_file["new_user_email"])
-    createUserButton.click()
+def test_read(login_into_the_system, check_create_user, cred_file):
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
     user_status_for_read = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/b[1]').text
@@ -24,14 +18,7 @@ def test_read(login_into_the_system, cred_file):
 
 
 
-def test_update (login_into_the_system, cred_file):
-    pytest.driver.get("https://www.aqa.science/users")
-    userName_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[1]/div/input')
-    userEmail_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[2]/div/input')
-    createUserButton = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[4]/button')
-    userName_field.send_keys(cred_file["new_user_name"])
-    userEmail_field.send_keys(cred_file["new_user_email"])
-    createUserButton.click()
+def test_update (login_into_the_system,check_create_user, cred_file):
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
     new_user_name_for_update = pytest.driver.find_element(By.XPATH, '//*[@id="put-object-form"]/form/fieldset/div[1]/div/input')
@@ -44,14 +31,7 @@ def test_update (login_into_the_system, cred_file):
     assert user_upd == f'"{cred_file["updated_name"]}"'
 
 
-def test_delete(login_into_the_system, cred_file):
-    pytest.driver.get("https://www.aqa.science/users")
-    userName_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[1]/div/input')
-    userEmail_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[2]/div/input')
-    createUserButton = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[4]/button')
-    userName_field.send_keys(cred_file["new_user_name"])
-    userEmail_field.send_keys(cred_file["new_user_email"])
-    createUserButton.click()
+def test_delete(login_into_the_system, check_create_user, cred_file):
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
     status_by_xpath_after_delete = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span/b[1]').text
