@@ -13,9 +13,7 @@ def cred_file():
     # take admin credentials
     with open(file_pass, "r") as f:
         login_variables = json.load(f)
-        admin_name = login_variables["admin_login"]
-        admin_password = login_variables["admin_password"]
-        return admin_name, admin_password
+        return login_variables
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -51,8 +49,8 @@ def login_into_the_system(cred_file):
     login_field = pytest.driver.find_element(By.XPATH, '//*[@id="id_username"]')
     password_field = pytest.driver.find_element(By.XPATH, '//*[@id="id_password"]')
     login_button = pytest.driver.find_element(By.XPATH, '//*[@id="submit-id-submit"]')
-    login_field.send_keys(cred_file[0])
-    password_field.send_keys(cred_file[1])
+    login_field.send_keys(cred_file["admin_login"])
+    password_field.send_keys(cred_file["admin_password"])
     login_button.click()
     yield
     pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/button').click()

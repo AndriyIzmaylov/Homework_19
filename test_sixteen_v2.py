@@ -6,15 +6,15 @@ def test_create(login_into_the_system, cred_file):
     userName_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[1]/div/input')
     userEmail_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[2]/div/input')
     createUserButton = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[4]/button')
-    userName_field.send_keys(cred_file[0])
-    userEmail_field.send_keys(cred_file[1])
+    userName_field.send_keys(cred_file["new_user_name"])
+    userEmail_field.send_keys(cred_file["new_user_email"])
     createUserButton.click()
     status_by_xpath_from_response = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/b[1]').text
     assert status_by_xpath_from_response == "HTTP 201 Created"
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
     user_name_after_creating = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[14]').text
-    assert user_name_after_creating == f'"{cred_file[0]}"'
+    assert user_name_after_creating == f'"{cred_file["new_user_name"]}"'
 
 
 # def test_read(login_into_the_system, click_delete_on_user_page):
