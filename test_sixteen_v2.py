@@ -14,7 +14,7 @@ def test_create(login_into_the_system, cred_file):
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
     user_name_after_creating = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[14]').text
-    assert user_name_after_creating == f'"{cred_file[1]}"'
+    assert user_name_after_creating == f'"{cred_file[0]}"'
 
 
 # def test_read(login_into_the_system, click_delete_on_user_page):
