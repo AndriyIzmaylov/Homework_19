@@ -59,7 +59,7 @@ def login_into_the_system(cred_file):
 
 
 @pytest.fixture()
-def check_user_exist():
+def check_user_exist(cred_file):
     pytest.driver.get("https://www.aqa.science/users")
     number = 0
     userName_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[1]/div/input')
