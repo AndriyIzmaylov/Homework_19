@@ -8,6 +8,7 @@ from pathlib import Path
 project_pass = Path.cwd()
 file_pass = project_pass.joinpath("creds.json")
 
+
 @pytest.fixture()
 def cred_file():
     # take admin credentials
@@ -17,11 +18,10 @@ def cred_file():
 
 
 @pytest.fixture(scope="session", autouse=True)
-def session_class():
+def file_browser_open_docker_close():
     # Open file with data
     with open(file_pass, "r") as f:
         login_variables = json.load(f)
-
 
     port = 4488
 
@@ -43,8 +43,9 @@ def session_class():
     time.sleep(3)
     pytest.driver.close()
 
+
 @pytest.fixture()
-def login_into_the_system(cred_file):
+def login_logout_system(cred_file):
     pytest.driver.get("https://www.aqa.science/api-auth/login/?next=/")
     login_field = pytest.driver.find_element(By.XPATH, '//*[@id="id_username"]')
     password_field = pytest.driver.find_element(By.XPATH, '//*[@id="id_password"]')

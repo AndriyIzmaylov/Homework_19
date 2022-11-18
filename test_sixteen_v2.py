@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-def test_create(login_into_the_system, check_create_user, cred_file):
+def test_create(login_logout_system, check_create_user, cred_file):
     assert check_create_user == "HTTP 201 Created"
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
@@ -10,7 +10,7 @@ def test_create(login_into_the_system, check_create_user, cred_file):
     assert user_name_after_creating == f'"{cred_file["new_user_name"]}"'
 
 
-def test_read(login_into_the_system, check_create_user, cred_file):
+def test_read(login_logout_system, check_create_user, cred_file):
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
     user_status_for_read = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/b[1]').text
@@ -18,7 +18,7 @@ def test_read(login_into_the_system, check_create_user, cred_file):
 
 
 
-def test_update (login_into_the_system,check_create_user, cred_file):
+def test_update (login_logout_system, check_create_user, cred_file):
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
     new_user_name_for_update = pytest.driver.find_element(By.XPATH, '//*[@id="put-object-form"]/form/fieldset/div[1]/div/input')
@@ -31,7 +31,7 @@ def test_update (login_into_the_system,check_create_user, cred_file):
     assert user_upd == f'"{cred_file["updated_name"]}"'
 
 
-def test_delete(login_into_the_system, check_create_user, cred_file):
+def test_delete(login_logout_system, check_create_user, cred_file):
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
     status_by_xpath_after_delete = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span/b[1]').text
