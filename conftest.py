@@ -57,3 +57,25 @@ def login_into_the_system(cred_file):
     pytest.driver.find_element(By.XPATH, '//*[@id="deleteModal"]/div/div/div[2]/form/button').submit()
     pytest.driver.get("https://www.aqa.science/api-auth/logout/?next=/users/")
 
+
+@pytest.fixture()
+def check_user_exist():
+    number = 0
+    userName_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[1]/div/input')
+    userEmail_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[2]/div/input')
+    createUserButton = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[4]/button')
+    userName_field.send_keys(cred_file["new_user_name"])
+    userEmail_field.send_keys(cred_file["new_user_email"])
+    createUserButton.click()
+    status_by_xpath_from_response = pytest.driver.find_element(By.XPATH,
+                                                               '//*[@id="content"]/div[2]/div[4]/pre/span[1]/b[1]').text
+    while status_by_xpath_from_response != "HTTP 201 Created":
+        number += 1
+        userName_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[1]/div/input')
+        userEmail_field = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[2]/div/input')
+        createUserButton = pytest.driver.find_element(By.XPATH, '//*[@id="post-object-form"]/form/fieldset/div[4]/button')
+        userName_field.send_keys(f'{cred_file["new_user_name"]}{number}')
+        userEmail_field.send_keys(cred_file["new_user_email"])
+        createUserButton.click()
+        status_by_xpath_from_response = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/b[1]').text
+    return status_by_xpath_from_response
