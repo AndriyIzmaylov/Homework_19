@@ -58,6 +58,22 @@ def login_logout_system(cred_file):
     pytest.driver.find_element(By.XPATH, '//*[@id="deleteModal"]/div/div/div[2]/form/button').submit()
     pytest.driver.get("https://www.aqa.science/api-auth/logout/?next=/users/")
 
+@pytest.fixture()
+def login_for_delete(cred_file):
+    pytest.driver.get("https://www.aqa.science/api-auth/login/?next=/")
+    login_field = pytest.driver.find_element(By.XPATH, '//*[@id="id_username"]')
+    password_field = pytest.driver.find_element(By.XPATH, '//*[@id="id_password"]')
+    login_button = pytest.driver.find_element(By.XPATH, '//*[@id="submit-id-submit"]')
+    login_field.send_keys(cred_file["admin_login"])
+    password_field.send_keys(cred_file["admin_password"])
+    login_button.click()
+    yield
+
+@pytest.fixture()
+def logout_for_delete():
+    yield
+    pytest.driver.get("https://www.aqa.science/api-auth/logout/?next=/users/")
+
 
 @pytest.fixture()
 def check_create_user(cred_file):

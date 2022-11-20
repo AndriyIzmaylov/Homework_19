@@ -31,9 +31,11 @@ def test_update (login_logout_system, check_create_user, cred_file):
     assert user_upd == f'"{cred_file["updated_name"]}"'
 
 
-def test_delete(login_logout_system, check_create_user, cred_file):
+def test_delete(login_for_delete, check_create_user, logout_for_delete, cred_file):
     user_id_after_create = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span[1]/span[3]/a').text
     pytest.driver.get(user_id_after_create)
+    pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/button').click()
+    pytest.driver.find_element(By.XPATH, '//*[@id="deleteModal"]/div/div/div[2]/form/button').submit()
     status_by_xpath_after_delete = pytest.driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[4]/pre/span/b[1]').text
     assert status_by_xpath_after_delete == 'HTTP 200 OK'
 
